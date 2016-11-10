@@ -14,7 +14,7 @@ function adoptPuppy(payload) {
 }
 
 function likePuppy(e) {
-  console.log(id);
+  console.log(e);
   // Implement liking a puppy here.
   return fetch(`/api/puppies/${e}`, {
     method: 'put',
@@ -25,8 +25,15 @@ function likePuppy(e) {
   });
 }
 
-function abandonPuppy() {
+function abandonPuppy(e) {
   // Implement abandoning a puppy here :(
+    return fetch(`/api/puppies/${e}`, {
+    method: 'delete',
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+    // body: JSON.stirngify(payload)
+  });
 }
 
 
@@ -58,6 +65,11 @@ function renderPuppies(puppies) {
 
     // you should add a button for abandoning here
 
+    $newPuppy
+      .find('.deleteButton')
+      .attr('name', puppies[i].id)
+
+
     $container.append($newPuppy);
   }
 }
@@ -71,6 +83,9 @@ function registerLikeButtonHandler() {
 
 function registerAbandonButtonHandler() {
   // implement abandon button listener here. :(
+    $('.adopted-puppies').on('click', '.deleteButton', (e) => {
+    abandonPuppy(e.currentTarget.name);
+  })
 }
 
 
